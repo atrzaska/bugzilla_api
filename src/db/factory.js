@@ -1,7 +1,13 @@
+const sample = require('lodash/sample')
+const random = require('lodash/random')
+const { hash } = require('../helpers/bcrypt')
+
 const createUser = (i) => ({
   id: i,
   firstName: `John ${i}`,
   lastName: 'Doe',
+  email: `admin${i}@bugzilla.com`,
+  password: hash(`password${i}`),
   position: 'Software Engineer',
   company: 'XING',
   photoUrl:
@@ -17,20 +23,30 @@ const createProject = (i) => ({
 const createTask = (i) => ({
   id: i,
   description: `My Task ${i}`,
-  complete: true,
+  complete: sample([true, false]),
+  story_id: 1,
 })
 
 const createComment = (i) => ({
   id: i,
   content: `My Comment ${i}`,
+  story_id: 1,
 })
+
+const containers = ['icebox', 'backlog']
+const storyTypes = ['feature', 'bug', 'chore', 'release']
+const states = ['unstarted', 'started', 'finished', 'delivered', 'rejected']
 
 const createStory = (i) => ({
   id: i,
   name: `My Story ${i}`,
   description: 'My Description',
-  storyType: 'feature',
-  container: 'icebox',
+  project_id: 1,
+  kind: sample(storyTypes),
+  container: sample(containers),
+  state: sample(states),
+  tasksCount: random(10),
+  commentsCount: random(10),
 })
 
 module.exports = {

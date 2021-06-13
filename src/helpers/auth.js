@@ -1,5 +1,5 @@
-const ADMIN = 'admin@bugzilla.com'
+const { compare } = require('../helpers/bcrypt')
 
-const validatePassword = ({ email, password }) => email === ADMIN
+const validatePassword = (user, password) => compare(password, user.password)
 
 module.exports = { validatePassword }

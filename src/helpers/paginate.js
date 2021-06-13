@@ -5,8 +5,10 @@ const DEFAULT_LIMIT = 10
 const paginate = (results, req) => {
   if (req.query.offset) {
     return withLimitOffsetPagination(results, req)
-  } else {
+  } else if (req.query.page) {
     return withPagePerPagination(results, req)
+  } else {
+    return { collection: results, total: results.length }
   }
 }
 
