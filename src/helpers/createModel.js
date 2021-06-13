@@ -35,7 +35,6 @@ const createModel = ({ factory, count = 0 }) => {
     }
 
     items = items.filter((x) => x.id != id)
-    console.log(items)
 
     return obj
   }
