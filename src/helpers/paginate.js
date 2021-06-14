@@ -1,24 +1,24 @@
 const fillArray = require('./fillArray')
 
-const DEFAULT_LIMIT = 10
+const SIZE = 10
 
 const paginate = (results, req) => {
   if (req.query.offset) {
-    return withLimitOffsetPagination(results, req)
+    return withLimitPagination(results, req)
   } else if (req.query.page) {
-    return withPagePerPagination(results, req)
+    return withPagePagination(results, req)
   } else {
     return { collection: results, total: results.length }
   }
 }
 
-const withPagePerPagination = (results, req) => {
-  let { page = 1, per = DEFAULT_LIMIT } = req.query
+const withPagePagination = (results, req) => {
+  let { page = 1, size = SIZE } = req.query
   page = parseInt(page)
-  per = parseInt(per)
+  size = parseInt(size)
 
-  const offset = (page - 1) * per
-  const limit = per
+  const offset = (page - 1) * size
+  const limit = size
   const collection = results.slice(offset, offset + limit)
 
   return {
@@ -27,9 +27,9 @@ const withPagePerPagination = (results, req) => {
   }
 }
 
-const withLimitOffsetPagination = (obj, req) => {
+const withLimitPagination = (obj, req) => {
   const results = fillArray(obj, SIZE)
-  let { offset = 0, limit = DEFAULT_LIMIT } = req.query
+  let { offset = 0, limit = SIZE } = req.query
   offset = parseInt(offset)
   limit = parseInt(limit)
   const collection = results.slice(offset, offset + limit)
