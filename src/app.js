@@ -27,7 +27,7 @@ app.get('/api/refresh_token', requiresAuth, (req, res) =>
   res.json({ token: refreshToken(req.token) })
 )
 app.post('/api/signin', (req, res) => {
-  const errors = validate(signInSchema, req.body)
+  const errors = validate(req.body, signInSchema)
 
   if (errors.length) {
     res.status(422).json(mapErrors(errors))
@@ -49,7 +49,7 @@ app.post('/api/signin', (req, res) => {
   }
 })
 app.post('/api/signup', (req, res) => {
-  const errors = validate(signUpSchema, req.body)
+  const errors = validate(req.body, signUpSchema)
 
   if (errors.length) {
     res.status(422).json(mapErrors(errors))

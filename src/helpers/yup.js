@@ -1,6 +1,6 @@
 const yup = require('yup')
 
-const validate = (schema, obj) => {
+const validate = (obj, schema) => {
   try {
     schema.validateSync(obj, { abortEarly: false })
     return []
