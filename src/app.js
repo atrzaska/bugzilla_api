@@ -9,6 +9,13 @@ const Task = require('./models/Task')
 const User = require('./models/User')
 const collection = require('./helpers/collection')
 const { validatePassword } = require('./helpers/auth')
+const createUser = require('./services/user/create')
+const {
+  mapErrors,
+  validate,
+  signUpSchema,
+  signInSchema,
+} = require('./helpers/yup')
 
 const app = express()
 const port = 4000
@@ -16,12 +23,22 @@ const port = 4000
 app.use(morgan('dev'))
 app.use(express.json())
 
+app.get('/api/refresh_token', requiresAuth, (req, res) =>
+  res.json({ token: refreshToken(req.token) })
+)
 app.post('/api/signin', (req, res) => {
+  const errors = validate(signInSchema, req.body)
+
+  if (errors.length) {
+    res.status(422).json(mapErrors(errors))
+    return
+  }
+
   const { email, password } = req.body
   const user = User.findBy({ email })
 
   if (!user) {
-    res.status(404).json({})
+    res.status(422).json({})
     return
   }
 
@@ -31,11 +48,26 @@ app.post('/api/signin', (req, res) => {
     res.status(422).json({})
   }
 })
-app.get('/api/refresh_token', requiresAuth, (req, res) =>
-  res.json({ token: refreshToken(req.token) })
-)
+app.post('/api/signup', (req, res) => {
+  const errors = validate(signUpSchema, req.body)
 
-app.post('/api/register', (req, res) => res.json(User.find(1)))
+  if (errors.length) {
+    res.status(422).json(mapErrors(errors))
+    return
+  }
+
+  const { email } = req.body
+  let user = User.findBy({ email })
+
+  if (user) {
+    res.status(422).json({ errors: ['user_exists'] })
+    return
+  }
+
+  user = createUser(req.body)
+
+  res.json(user)
+})
 app.post('/api/logout', requiresAuth, (req, res) => res.json({}))
 app.get('/api/me', requiresAuth, (req, res) => res.json(req.user))
 
