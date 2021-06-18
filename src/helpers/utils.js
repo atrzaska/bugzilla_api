@@ -36,7 +36,7 @@ function slugify(text) {
     .replace(/-+$/, '')
 }
 
-function fullName(firstName, lastName) {
+function fullName({ firstName, lastName }) {
   return [firstName, lastName].filter((x) => Boolean(x)).join(' ')
 }
 
