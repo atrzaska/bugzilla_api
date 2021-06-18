@@ -60,7 +60,7 @@ app.post('/api/signup', (req, res) => {
   let user = User.findBy({ email })
 
   if (user) {
-    res.status(422).json({ errors: ['user_exists'] })
+    res.status(422).json({ errors: { email: ['This email is already taken'] } })
     return
   }
 
