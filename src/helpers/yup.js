@@ -14,7 +14,7 @@ const mapErrors = (errors) => {
 
   errors.forEach((error) => {
     const key = error.path
-    const value = error.errors
+    const value = error.errors[0]
     result[key] = value
   })
 
