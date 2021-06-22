@@ -10,10 +10,10 @@ const requiresAuth = (req, res, next) => {
       req.token = token
       next()
     } catch (err) {
-      res.status(400).json({ error: 'token invalid' })
+      res.status(401).json({ error: 'token invalid' })
     }
   } else {
-    res.status(400).json({ error: 'token invalid' })
+    res.status(401).json({ error: 'token invalid' })
   }
 }
 
