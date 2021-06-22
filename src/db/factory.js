@@ -8,7 +8,7 @@ const createUser = (i) => ({
   firstName: sample(['Angus', 'Jose']),
   lastName: sample(['Cooper', 'Butler']),
   email: `admin${i}@bugzilla.com`,
-  password: hash(`password${i}`),
+  password: hash(`admin${i}@bugzilla.com`),
   position: 'Software Engineer',
   company: 'XING',
   termsAccepted: true,
