@@ -4,9 +4,14 @@ const createModel = ({ factory, count = 0 }) => {
   let items = fillArray(factory, count)
   const all = () => items
   const find = (id) => items.find((x) => x.id == id)
+  const where = (filters) => {
+    for (const [key, value] of Object.entries(filters)) {
+      return items.filter((x) => [value].flat().includes(x[key]))
+    }
+  }
   const findBy = (filters) => {
     for (const [key, value] of Object.entries(filters)) {
-      return items.find((x) => x[key] === value)
+      return items.find((x) => [value].flat().includes(x[key]))
     }
   }
   const create = (attrs) => {
@@ -39,7 +44,7 @@ const createModel = ({ factory, count = 0 }) => {
     return obj
   }
 
-  return { all, find, findBy, create, update, remove }
+  return { all, find, where, findBy, create, update, remove }
 }
 
 module.exports = createModel
