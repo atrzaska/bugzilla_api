@@ -27,13 +27,7 @@ const filter = (results, req) => {
       const field = key.replace('filter.', '')
       const parsedValue = parse(value)
 
-      results = results.filter((r) => {
-        if (Array.isArray(parsedValue)) {
-          return parsedValue.includes(r[field])
-        } else {
-          return r[field] === parsedValue
-        }
-      })
+      results = results.filter((r) => [parsedValue].flat().includes(r[field]))
     }
   }
 
