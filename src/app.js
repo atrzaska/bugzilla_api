@@ -7,6 +7,7 @@ const Story = require('./models/Story')
 const Comment = require('./models/Comment')
 const Task = require('./models/Task')
 const User = require('./models/User')
+const UserProject = require('./models/userProject')
 const collection = require('./helpers/collection')
 const { validatePassword } = require('./helpers/auth')
 const createUser = require('./services/user/create')
@@ -16,6 +17,7 @@ const {
   signUpSchema,
   signInSchema,
 } = require('./helpers/yup')
+const { slugify } = require('./helpers/utils')
 
 const app = express()
 const port = 4000
@@ -71,12 +73,22 @@ app.post('/api/signup', (req, res) => {
 app.post('/api/logout', requiresAuth, (req, res) => res.json({}))
 app.get('/api/me', requiresAuth, (req, res) => res.json(req.user))
 
-app.get('/api/projects', requiresAuth, (req, res) =>
-  res.json(collection(Project.all(), req))
-)
-app.post('/api/projects', requiresAuth, (req, res) =>
-  res.json(Project.create(req.body))
-)
+app.get('/api/projects', requiresAuth, (req, res) => {
+  const userProjects = UserProject.where({ userId: req.user.id })
+  const projectIds = userProjects.map((x) => x.id)
+  const projects = Project.where({ id: projectIds })
+  res.json(collection(projects, req))
+})
+app.post('/api/projects', requiresAuth, (req, res) => {
+  slug = slugify(req.body.name)
+  const project = Project.create({ ...req.body, slug })
+  UserProject.create({
+    userId: req.user.id,
+    projectId: project.id,
+    role: 'owner',
+  })
+  res.json(project)
+})
 app.get('/api/projects/:id', requiresAuth, (req, res) =>
   res.json(Project.find(req.params.id))
 )
