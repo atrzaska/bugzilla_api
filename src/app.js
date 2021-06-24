@@ -17,7 +17,6 @@ const {
   signUpSchema,
   signInSchema,
 } = require('./helpers/yup')
-const { slugify } = require('./helpers/utils')
 
 const app = express()
 const port = 4000
@@ -80,8 +79,7 @@ app.get('/api/projects', requiresAuth, (req, res) => {
   res.json(collection(projects, req))
 })
 app.post('/api/projects', requiresAuth, (req, res) => {
-  slug = slugify(req.body.name)
-  const project = Project.create({ ...req.body, slug })
+  const project = Project.create(req.body)
   UserProject.create({
     userId: req.user.id,
     projectId: project.id,

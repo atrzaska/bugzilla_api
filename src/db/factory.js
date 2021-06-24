@@ -1,7 +1,6 @@
 const sample = require('lodash/sample')
 const random = require('lodash/random')
 const { hash } = require('../helpers/bcrypt')
-const { slugify } = require('../helpers/utils')
 
 const createUser = (i) => ({
   id: i,
@@ -19,7 +18,6 @@ const createUser = (i) => ({
 const createProject = (i) => ({
   id: i,
   name: `My Project ${i}`,
-  slug: slugify(`My Project ${i}`),
 })
 
 const createUserProject = (i) => ({
