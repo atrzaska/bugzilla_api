@@ -100,9 +100,16 @@ app.delete('/api/projects/:id', requiresAuth, (req, res) =>
 app.get('/api/stories', requiresAuth, (req, res) =>
   res.json(collection(Story.all(), req))
 )
-app.post('/api/stories', requiresAuth, (req, res) =>
-  res.json(Story.create(req.body))
-)
+app.post('/api/stories', requiresAuth, (req, res) => {
+  res.json(
+    Story.create({
+      ...req.body,
+      state: 'unstarted',
+      tasksCount: 0,
+      commentsCount: 0,
+    })
+  )
+})
 app.get('/api/stories/:id', requiresAuth, (req, res) =>
   res.json(Story.find(req.params.id))
 )
