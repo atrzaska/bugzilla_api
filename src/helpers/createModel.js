@@ -18,7 +18,7 @@ const createModel = ({ factory, count = 0 }) => {
     const lastObj = items.slice(-1)[0]
     const lastId = lastObj.id
     const id = lastId + 1
-    const obj = Object.assign({}, { id }, attrs)
+    const obj = { ...attrs, id }
 
     items.push(obj)
 
@@ -27,7 +27,7 @@ const createModel = ({ factory, count = 0 }) => {
   const update = (id, attrs) => {
     const index = items.findIndex((x) => x.id == id)
     const result = items[index]
-    const newObj = Object.assign({}, result, attrs)
+    const newObj = { ...result, attrs }
 
     items[index] = newObj
 
