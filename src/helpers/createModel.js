@@ -27,7 +27,7 @@ const createModel = ({ factory, count = 0 }) => {
   const update = (id, attrs) => {
     const index = items.findIndex((x) => x.id == id)
     const result = items[index]
-    const newObj = { ...result, attrs }
+    const newObj = { ...result, ...attrs }
 
     items[index] = newObj
 
