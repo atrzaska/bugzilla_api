@@ -11,6 +11,7 @@ const UserProject = require('./models/userProject')
 const collection = require('./helpers/collection')
 const { validatePassword } = require('./helpers/auth')
 const createUser = require('./services/user/create')
+const { fullName } = require('./helpers/utils')
 const {
   mapErrors,
   validate,
@@ -74,7 +75,7 @@ app.get('/api/me', requiresAuth, (req, res) => res.json(req.user))
 
 app.get('/api/projects', requiresAuth, (req, res) => {
   const userProjects = UserProject.where({ userId: req.user.id })
-  const projectIds = userProjects.map((x) => x.id)
+  const projectIds = userProjects.map((x) => x.projectId)
   const projects = Project.where({ id: projectIds })
   res.json(collection(projects, req))
 })
@@ -137,7 +138,7 @@ app.delete('/api/tasks/:id', requiresAuth, (req, res) =>
 )
 
 app.get('/api/comments', requiresAuth, (req, res) =>
-  res.json(collection(Comment.all()))
+  res.json(collection(Comment.all(), req))
 )
 app.post('/api/comments', requiresAuth, (req, res) =>
   res.json(Comment.create(req.body))
@@ -150,6 +151,41 @@ app.put('/api/comments/:id', requiresAuth, (req, res) =>
 )
 app.delete('/api/comments/:id', requiresAuth, (req, res) =>
   res.json(Comment.remove(req.params.id))
+)
+
+app.get('/api/members', requiresAuth, (req, res) => {
+  const filterProjectId = parseInt(req.query['filter.projectId'])
+  const members = UserProject.where({ projectId: filterProjectId })
+  const userIds = members.map((x) => x.userId)
+  const isCurrentUserMember = userIds.includes(req.user.id)
+
+  if (!isCurrentUserMember) {
+    res.status(403).json({})
+    return
+  }
+
+  const results = UserProject.all()
+
+  results.forEach((r) => {
+    const user = User.find(r.userId)
+    r.name = fullName(user)
+    r.email = user.email
+    r.photoUrl = user.photoUrl
+  })
+
+  res.json(collection(results, req))
+})
+app.post('/api/members', requiresAuth, (req, res) =>
+  res.json(UserProject.create(req.body))
+)
+app.get('/api/members/:id', requiresAuth, (req, res) =>
+  res.json(UserProject.find(req.params.id))
+)
+app.put('/api/members/:id', requiresAuth, (req, res) =>
+  res.json(UserProject.update(req.params.id, req.body))
+)
+app.delete('/api/members/:id', requiresAuth, (req, res) =>
+  res.json(UserProject.remove(req.params.id))
 )
 
 app.listen(port, () =>
