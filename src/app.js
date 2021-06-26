@@ -18,6 +18,7 @@ const {
   signUpSchema,
   signInSchema,
 } = require('./helpers/yup')
+const { NotFoundError } = require('./helpers/errors')
 
 const app = express()
 const port = 4000
@@ -88,9 +89,20 @@ app.post('/api/projects', requiresAuth, (req, res) => {
   })
   res.json(project)
 })
-app.get('/api/projects/:id', requiresAuth, (req, res) =>
-  res.json(Project.find(req.params.id))
-)
+app.get('/api/projects/:id', requiresAuth, (req, res) => {
+  const userId = req.user.id
+  const projectId = parseInt(req.params.id)
+  const userProject = UserProject.all().find(
+    (up) => up.userId === userId && up.projectId === projectId
+  )
+  let isOwner = false
+
+  if (userProject) {
+    isOwner = userProject.role === 'owner'
+  }
+
+  res.json({ ...Project.find(projectId), isOwner })
+})
 app.put('/api/projects/:id', requiresAuth, (req, res) =>
   res.json(Project.update(req.params.id, req.body))
 )
@@ -187,6 +199,20 @@ app.put('/api/members/:id', requiresAuth, (req, res) =>
 app.delete('/api/members/:id', requiresAuth, (req, res) =>
   res.json(UserProject.remove(req.params.id))
 )
+app.post('/api/invites', requiresAuth, (req, res) => {
+  const senderId = req.user.id
+  const recipientId = null
+  const invite = { ...req.body, senderId, recipientId }
+  res.json(invite)
+})
+
+app.use(function (err, req, res, next) {
+  if (err instanceof NotFoundError) {
+    res.status(404).json({})
+  } else {
+    next()
+  }
+})
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
