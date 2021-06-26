@@ -1,9 +1,18 @@
-const fillArray = require('../helpers/fillArray')
+const fillArray = require('./fillArray')
+const { NotFoundError } = require('./errors')
 
 const createModel = ({ factory, count = 0 }) => {
   let items = fillArray(factory, count)
   const all = () => items
-  const find = (id) => items.find((x) => x.id == id)
+  const find = (id) => {
+    const result = items.find((x) => x.id == id)
+
+    if (!result) {
+      throw new NotFoundError()
+    }
+
+    return result
+  }
   const where = (filters) => {
     for (const [key, value] of Object.entries(filters)) {
       return items.filter((x) => [value].flat().includes(x[key]))
