@@ -205,6 +205,8 @@ app.post('/api/invites', requiresAuth, (req, res) => {
   const invite = { ...req.body, senderId, recipientId }
   res.json(invite)
 })
+app.post('/api/recover', (req, res) => res.json(req.body))
+app.post('/api/confirm', (req, res) => res.json(req.body))
 
 app.use(function (err, req, res, next) {
   if (err instanceof NotFoundError) {
