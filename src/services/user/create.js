@@ -16,6 +16,7 @@ const create = (params) => {
     position: null,
     company: null,
     photoUrl: null,
+    confirmed: false,
   }
 
   const user = User.create(attributes)
