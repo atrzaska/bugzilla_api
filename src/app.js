@@ -45,6 +45,10 @@ app.post('/api/signin', (req, res) => {
     return
   }
 
+  if (!user.confirmed) {
+    res.status(422).json({})
+  }
+
   if (validatePassword(user, password)) {
     res.json({ user, token: generateToken(user) })
   } else {
