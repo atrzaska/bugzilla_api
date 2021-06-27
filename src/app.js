@@ -217,10 +217,12 @@ app.get('/api/reset_password/:id', (req, res) =>
 app.put('/api/reset_password/:id', (req, res) => res.json(req.body))
 
 app.use(function (err, req, res, next) {
+  console.log(err)
+
   if (err instanceof NotFoundError) {
     res.status(404).json({})
   } else {
-    next()
+    res.status(500).json({})
   }
 })
 
