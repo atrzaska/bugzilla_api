@@ -27,8 +27,7 @@ const withPagePagination = (results, req) => {
   }
 }
 
-const withLimitPagination = (obj, req) => {
-  const results = fillArray(obj, SIZE)
+const withLimitPagination = (results, req) => {
   let { offset = 0, limit = SIZE } = req.query
   offset = parseInt(offset)
   limit = parseInt(limit)
