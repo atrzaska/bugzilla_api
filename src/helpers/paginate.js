@@ -1,5 +1,3 @@
-const fillArray = require('./fillArray')
-
 const SIZE = 10
 
 const paginate = (results, req) => {
