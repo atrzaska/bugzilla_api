@@ -213,6 +213,9 @@ app.get('/api/reset_password/:id', (req, res) =>
   res.json({ id: req.params.id })
 )
 app.put('/api/reset_password/:id', (req, res) => res.json(req.body))
+app.put('/api/me', (req, res) => res.json(req.body))
+app.put('/api/me/email', (req, res) => res.json(req.body))
+app.put('/api/me/password', (req, res) => res.json(req.body))
 
 app.use(function (err, req, res, next) {
   console.log(err)
