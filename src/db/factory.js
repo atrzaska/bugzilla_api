@@ -4,8 +4,7 @@ const { hash } = require('../helpers/bcrypt')
 
 const createUser = (i) => ({
   id: i,
-  firstName: sample(['Angus', 'Jose']),
-  lastName: sample(['Cooper', 'Butler']),
+  name: sample(['Angus Butler', 'Jose Cooper']),
   email: `admin${i}@bugzilla.com`,
   password: hash(`admin${i}@bugzilla.com`),
   position: 'Software Engineer',

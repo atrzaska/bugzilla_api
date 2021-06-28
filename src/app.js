@@ -11,7 +11,6 @@ const UserProject = require('./models/userProject')
 const collection = require('./helpers/collection')
 const { validatePassword } = require('./helpers/auth')
 const createUser = require('./services/user/create')
-const { fullName } = require('./helpers/utils')
 const {
   mapErrors,
   validate,
@@ -184,7 +183,6 @@ app.get('/api/members', requiresAuth, (req, res) => {
 
   results.forEach((r) => {
     const user = User.find(r.userId)
-    r.name = fullName(user)
     r.email = user.email
     r.photoUrl = user.photoUrl
   })
