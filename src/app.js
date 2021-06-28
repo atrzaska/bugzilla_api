@@ -18,6 +18,7 @@ const {
   signInSchema,
 } = require('./helpers/yup')
 const { NotFoundError } = require('./helpers/errors')
+const fields = require('./helpers/fields')
 
 const app = express()
 const port = 4000
@@ -75,7 +76,7 @@ app.post('/api/signup', (req, res) => {
   res.json(user)
 })
 app.post('/api/logout', requiresAuth, (req, res) => res.json({}))
-app.get('/api/me', requiresAuth, (req, res) => res.json(req.user))
+app.get('/api/me', requiresAuth, (req, res) => res.json(fields(req.user, req)))
 
 app.get('/api/projects', requiresAuth, (req, res) => {
   const userProjects = UserProject.where({ userId: req.user.id })
