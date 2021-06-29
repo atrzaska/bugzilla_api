@@ -3,14 +3,13 @@ const collection = require('src/services/collection')
 
 const index = (req, res) => res.json(collection(Story.all(), req))
 const create = (req, res) => {
-  res.json(
-    Story.create({
-      ...req.body,
-      state: 'unstarted',
-      tasksCount: 0,
-      commentsCount: 0,
-    })
-  )
+  const attributes = {
+    ...req.body,
+    state: 'unstarted',
+    tasksCount: 0,
+    commentsCount: 0,
+  }
+  res.json(Story.create(attributes))
 }
 const show = (req, res) => res.json(Story.find(req.params.id))
 const update = (req, res) => res.json(Story.update(req.params.id, req.body))
