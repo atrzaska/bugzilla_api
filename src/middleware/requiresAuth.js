@@ -9,8 +9,6 @@ const requiresAuth = (req, res, next) => {
     try {
       const payload = verifyToken(token)
       req.user = User.find(payload.id)
-      req.user = verifyToken(token)
-      req.token = token
       next()
     } catch (err) {
       res.status(401).json({})
