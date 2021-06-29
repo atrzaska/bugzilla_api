@@ -1,7 +1,18 @@
 const Story = require('src/models/Story')
+const Task = require('src/models/Task')
+const Comment = require('src/models/Comment')
 const collection = require('src/services/collection')
 
-const index = (req, res) => res.json(collection(Story.all(), req))
+const index = (req, res) => {
+  const results = Story.all()
+
+  results.forEach((r) => {
+    r.tasksCount = Task.where({ storyId: r.id }).length
+    r.commentsCount = Comment.where({ storyId: r.id }).length
+  })
+
+  res.json(collection(results, req))
+}
 const create = (req, res) => {
   const attributes = {
     ...req.body,
