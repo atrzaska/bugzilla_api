@@ -184,6 +184,7 @@ app.get('/api/members', requiresAuth, (req, res) => {
 
   results.forEach((r) => {
     const user = User.find(r.userId)
+    r.name = user.name
     r.email = user.email
     r.photoUrl = user.photoUrl
   })
