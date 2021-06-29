@@ -77,6 +77,15 @@ app.post('/api/signup', (req, res) => {
 })
 app.post('/api/logout', requiresAuth, (req, res) => res.json({}))
 app.get('/api/me', requiresAuth, (req, res) => res.json(fields(req.user, req)))
+app.post('/api/recover', (req, res) => res.json(req.body))
+app.post('/api/confirm', (req, res) => res.json(req.body))
+app.get('/api/reset_password/:id', (req, res) =>
+  res.json({ id: req.params.id })
+)
+app.put('/api/reset_password/:id', (req, res) => res.json(req.body))
+app.put('/api/me', (req, res) => res.json(req.body))
+app.put('/api/me/email', (req, res) => res.json(req.body))
+app.put('/api/me/password', (req, res) => res.json(req.body))
 
 app.get('/api/projects', requiresAuth, (req, res) => {
   const userProjects = UserProject.where({ userId: req.user.id })
@@ -209,15 +218,6 @@ app.post('/api/invites', requiresAuth, (req, res) => {
   const invite = { ...req.body, senderId, recipientId }
   res.json(invite)
 })
-app.post('/api/recover', (req, res) => res.json(req.body))
-app.post('/api/confirm', (req, res) => res.json(req.body))
-app.get('/api/reset_password/:id', (req, res) =>
-  res.json({ id: req.params.id })
-)
-app.put('/api/reset_password/:id', (req, res) => res.json(req.body))
-app.put('/api/me', (req, res) => res.json(req.body))
-app.put('/api/me/email', (req, res) => res.json(req.body))
-app.put('/api/me/password', (req, res) => res.json(req.body))
 
 app.use(function (err, req, res, next) {
   console.log(err)
