@@ -1,13 +1,13 @@
 const User = require('../models/User')
-const { generateToken, refreshToken } = require('../helpers/jwt')
-const { validatePassword } = require('../helpers/auth')
+const { generateToken, refreshToken } = require('../services/jwt')
+const { validatePassword } = require('../services/auth')
 const createUser = require('../services/user/create')
 const {
   mapErrors,
   validate,
   signUpSchema,
   signInSchema,
-} = require('../helpers/yup')
+} = require('../services/yup')
 
 const refresh = (req, res) => res.json({ token: refreshToken(req.token) })
 const logout = (req, res) => res.json({})

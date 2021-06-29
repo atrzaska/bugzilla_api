@@ -1,4 +1,4 @@
-const createModel = require('../helpers/createModel')
-const { createUser } = require('../db/factory')
+const createModel = require('../services/createModel')
+const { createUser } = require('../services/factory')
 
 module.exports = createModel({ factory: createUser, count: 2 })

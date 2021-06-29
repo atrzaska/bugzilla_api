@@ -1,4 +1,4 @@
-const { compare } = require('../helpers/bcrypt')
+const { compare } = require('./bcrypt')
 
 const validatePassword = (user, password) => compare(password, user.password)
 

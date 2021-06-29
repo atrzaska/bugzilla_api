@@ -1,4 +1,4 @@
-const { verifyToken } = require('../helpers/jwt')
+const { verifyToken } = require('../services/jwt')
 const User = require('../models/User')
 
 const requiresAuth = (req, res, next) => {

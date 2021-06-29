@@ -1,6 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
-const { NotFoundError } = require('./helpers/errors')
+const { NotFoundError } = require('./services/errors')
 const apiRoutes = require('./routes/api')
 
 const app = express()
