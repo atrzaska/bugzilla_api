@@ -1,5 +1,5 @@
-const User = require('../../models/User')
-const { hash } = require('../../services/bcrypt')
+const User = require('src/models/User')
+const { hash } = require('src/services/bcrypt')
 
 const create = (params) => {
   const { name, email, password, termsAccepted, newsletterSubscribed } = params

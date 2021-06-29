@@ -1,5 +1,5 @@
-const UserProject = require('../models/UserProject')
-const collection = require('../services/collection')
+const UserProject = require('src/models/UserProject')
+const collection = require('src/services/collection')
 
 const index = (req, res) => {
   const filterProjectId = parseInt(req.query['filter.projectId'])

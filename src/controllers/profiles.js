@@ -1,5 +1,5 @@
-const User = require('../models/User')
-const fields = require('../services/fields')
+const User = require('src/models/User')
+const fields = require('src/services/fields')
 
 const show = (req, res) => res.json(fields(req.user, req))
 const update = (req, res) => res.json(req.body)

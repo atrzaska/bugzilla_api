@@ -1,5 +1,5 @@
-const fillArray = require('./fillArray')
-const { NotFoundError } = require('./errors')
+const fillArray = require('src/services/fillArray')
+const { NotFoundError } = require('src/services/errors')
 
 const createModel = ({ factory, count = 0 }) => {
   let items = fillArray(factory, count)

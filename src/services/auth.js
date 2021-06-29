@@ -1,4 +1,4 @@
-const { compare } = require('./bcrypt')
+const { compare } = require('src/services/bcrypt')
 
 const validatePassword = (user, password) => compare(password, user.password)
 

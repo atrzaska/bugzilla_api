@@ -1,5 +1,5 @@
-const Task = require('../models/Task')
-const collection = require('../services/collection')
+const Task = require('src/models/Task')
+const collection = require('src/services/collection')
 
 const index = (req, res) => res.json(collection(Task.all(), req))
 const create = (req, res) => res.json(Task.create(req.body))

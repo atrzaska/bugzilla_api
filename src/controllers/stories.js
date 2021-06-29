@@ -1,5 +1,5 @@
-const Story = require('../models/Story')
-const collection = require('../services/collection')
+const Story = require('src/models/Story')
+const collection = require('src/services/collection')
 
 const index = (req, res) => res.json(collection(Story.all(), req))
 const create = (req, res) => {

@@ -1,7 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
-const { NotFoundError } = require('./services/errors')
-const apiRoutes = require('./routes/api')
+const { NotFoundError } = require('src/services/errors')
+const apiRoutes = require('src/routes/api')
 
 const app = express()
 const port = 4000

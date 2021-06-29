@@ -1,5 +1,5 @@
-const Comment = require('../models/Comment')
-const collection = require('../services/collection')
+const Comment = require('src/models/Comment')
+const collection = require('src/services/collection')
 
 const index = (req, res) => res.json(collection(Comment.all(), req))
 const create = (req, res) => res.json(Comment.create(req.body))

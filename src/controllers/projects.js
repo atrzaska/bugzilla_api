@@ -1,6 +1,6 @@
-const UserProject = require('../models/UserProject')
-const Project = require('../models/Project')
-const collection = require('../services/collection')
+const UserProject = require('src/models/UserProject')
+const Project = require('src/models/Project')
+const collection = require('src/services/collection')
 
 const index = (req, res) => {
   const userProjects = UserProject.where({ userId: req.user.id })

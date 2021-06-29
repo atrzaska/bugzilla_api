@@ -1,6 +1,6 @@
 const sample = require('lodash/sample')
 const random = require('lodash/random')
-const { hash } = require('../services/bcrypt')
+const { hash } = require('src/services/bcrypt')
 
 const createUser = (i) => ({
   id: i,
