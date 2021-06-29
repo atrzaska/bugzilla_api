@@ -1,3 +1,4 @@
+const User = require('src/models/User')
 const UserProject = require('src/models/UserProject')
 const collection = require('src/services/collection')
 
