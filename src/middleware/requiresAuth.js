@@ -13,7 +13,6 @@ const requiresAuth = (req, res, next) => {
       req.token = token
       next()
     } catch (err) {
-      console.log(err)
       res.status(401).json({})
     }
   } else {
