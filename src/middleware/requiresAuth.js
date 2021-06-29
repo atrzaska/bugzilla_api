@@ -1,4 +1,5 @@
 const { verifyToken } = require('../helpers/jwt')
+const User = require('./models/User')
 
 const requiresAuth = (req, res, next) => {
   const authHeader = req.headers.authorization
@@ -6,16 +7,16 @@ const requiresAuth = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1]
     try {
+      const payload = verifyToken(token)
+      req.user = User.find(payload.id)
       req.user = verifyToken(token)
-      delete req.user.iat
-      delete req.user.exp
       req.token = token
       next()
     } catch (err) {
-      res.status(401).json({ error: 'token invalid' })
+      res.status(401).json({})
     }
   } else {
-    res.status(401).json({ error: 'token invalid' })
+    res.status(401).json({})
   }
 }
 
