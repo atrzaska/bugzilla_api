@@ -50,7 +50,7 @@ app.post('/api/signin', (req, res) => {
   }
 
   if (validatePassword(user, password)) {
-    res.json({ user, token: generateToken(user) })
+    res.json({ token: generateToken({ id: user.id }) })
   } else {
     res.status(422).json({})
   }
