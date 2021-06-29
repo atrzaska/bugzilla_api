@@ -9,11 +9,14 @@ const requiresAuth = (req, res, next) => {
     try {
       const payload = verifyToken(token)
       req.user = User.find(payload.id)
+      req.token = token
       next()
     } catch (err) {
+      console.log(err)
       res.status(401).json({})
     }
   } else {
+    console.log(err)
     res.status(401).json({})
   }
 }

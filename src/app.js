@@ -229,6 +229,4 @@ app.use(function (err, req, res, next) {
   }
 })
 
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-)
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`))
