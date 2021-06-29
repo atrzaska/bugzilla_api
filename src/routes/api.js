@@ -1,4 +1,9 @@
 const express = require('express')
+const multer = require('multer')
+
+const upload = multer({ dest: 'uploads/' })
+const uploadAvatar = upload.single('avatar')
+
 const { requiresAuth } = require('src/middleware/requiresAuth')
 const authController = require('src/controllers/auth')
 const commentsController = require('src/controllers/comments')
@@ -22,7 +27,7 @@ router.get('/refresh_token', requiresAuth, authController.refresh)
 router.post('/logout', requiresAuth, authController.logout)
 
 router.get('/me', requiresAuth, profilesController.show)
-router.put('/me', requiresAuth, profilesController.update)
+router.put('/me', requiresAuth, uploadAvatar, profilesController.update)
 router.delete('/me', requiresAuth, profilesController.remove)
 router.put('/me/email', requiresAuth, profilesController.updateEmail)
 router.put('/me/password', requiresAuth, profilesController.updatePassword)
