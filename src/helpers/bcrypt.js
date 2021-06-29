@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs')
 
-const hash = (pass) => {
+const hash = (password) => {
   const saltRounds = 10
   const salt = bcrypt.genSaltSync(saltRounds)
 
-  return bcrypt.hashSync(pass, salt)
+  return bcrypt.hashSync(password, salt)
 }
 
 const compare = (password, hash) => bcrypt.compareSync(password, hash)
