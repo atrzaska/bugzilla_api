@@ -32,7 +32,7 @@ const signin = (req, res) => {
   }
 
   if (validatePassword(user, password)) {
-    res.json({ token: createAccessToken({ id: user.id }) })
+    res.json({ token: createAccessToken(user) })
   } else {
     res.status(422).json({})
   }

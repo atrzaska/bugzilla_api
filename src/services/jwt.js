@@ -2,11 +2,9 @@ const { sign, verify } = require('jsonwebtoken')
 
 const { ACCESS_TOKEN_SECRET } = process.env
 
-const OPTIONS = { expiresIn: '7d' }
-
-const createAccessToken = (payload) =>
-  sign(payload, ACCESS_TOKEN_SECRET, OPTIONS)
-const verifyAccessToken = (payload) => verify(payload, KEY, OPTIONS)
+const createAccessToken = (user) =>
+  sign({ userId: user.id }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+const verifyAccessToken = (payload) => verify(payload, ACCESS_TOKEN_SECRET)
 const refreshAccessToken = (token) => {
   const payload = verifyAccessToken(token)
   delete payload.exp

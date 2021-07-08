@@ -9,7 +9,7 @@ const requiresAuth = (req, res, next) => {
 
     try {
       const payload = verifyAccessToken(token)
-      req.user = User.find(payload.id)
+      req.user = User.find(payload.userId)
       req.token = token
       next()
     } catch (err) {
