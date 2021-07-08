@@ -1,4 +1,4 @@
-const { verifyToken } = require('src/services/jwt')
+const { verifyAccessToken } = require('src/services/jwt')
 const User = require('src/models/User')
 
 const requiresAuth = (req, res, next) => {
@@ -8,7 +8,7 @@ const requiresAuth = (req, res, next) => {
     const token = authHeader.split(' ')[1]
 
     try {
-      const payload = verifyToken(token)
+      const payload = verifyAccessToken(token)
       req.user = User.find(payload.id)
       req.token = token
       next()

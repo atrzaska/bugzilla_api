@@ -1,5 +1,5 @@
 const User = require('src/models/User')
-const { generateToken, refreshToken } = require('src/services/jwt')
+const { createAccessToken, refreshAccessToken } = require('src/services/jwt')
 const { validatePassword } = require('src/services/auth')
 const createUser = require('src/services/user/create')
 const {
@@ -9,7 +9,7 @@ const {
   signInSchema,
 } = require('src/services/yup')
 
-const refresh = (req, res) => res.json({ token: refreshToken(req.token) })
+const refresh = (req, res) => res.json({ token: refreshAccessToken(req.token) })
 const logout = (req, res) => res.json({})
 const signin = (req, res) => {
   const errors = validate(req.body, signInSchema)
@@ -32,7 +32,7 @@ const signin = (req, res) => {
   }
 
   if (validatePassword(user, password)) {
-    res.json({ token: generateToken({ id: user.id }) })
+    res.json({ token: createAccessToken({ id: user.id }) })
   } else {
     res.status(422).json({})
   }

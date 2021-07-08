@@ -1,19 +1,21 @@
-const jwt = require('jsonwebtoken')
+const { sign, verify } = require('jsonwebtoken')
 
-const KEY = process.env.JWT_KEY
+const { ACCESS_TOKEN_SECRET } = process.env
+
 const OPTIONS = { expiresIn: '7d' }
 
-const generateToken = (payload) => jwt.sign(payload, KEY, OPTIONS)
-const verifyToken = (payload) => jwt.verify(payload, KEY, OPTIONS)
-const refreshToken = (token) => {
-  const payload = verifyToken(token)
+const createAccessToken = (payload) =>
+  sign(payload, ACCESS_TOKEN_SECRET, OPTIONS)
+const verifyAccessToken = (payload) => verify(payload, KEY, OPTIONS)
+const refreshAccessToken = (token) => {
+  const payload = verifyAccessToken(token)
   delete payload.exp
   delete payload.iat
-  return generateToken(payload)
+  return createAccessToken(payload)
 }
 
 module.exports = {
-  verifyToken,
-  generateToken,
-  refreshToken,
+  verifyAccessToken,
+  createAccessToken,
+  refreshAccessToken,
 }
