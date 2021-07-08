@@ -1,8 +1,7 @@
 const User = require('src/models/User')
-const {
-  createAccessToken,
-  refreshAccessToken,
-} = require('src/services/jwt/accessToken')
+const { createAccessToken } = require('src/services/jwt/accessToken')
+const { createRefreshToken } = require('src/services/jwt/refreshToken')
+const sendRefreshTokenCookie = require('src/services/jwt/sendRefreshTokenCookie')
 const { validatePassword } = require('src/services/auth')
 const createUser = require('src/services/user/create')
 const {
@@ -12,8 +11,10 @@ const {
   signInSchema,
 } = require('src/services/yup')
 
-const refresh = (req, res) => res.json({ accessToken: refreshAccessToken(req.accessToken) })
-const logout = (req, res) => res.json({})
+const logout = (req, res) => {
+  sendRefreshTokenCookie(res, '')
+  res.json({})
+}
 const signin = (req, res) => {
   const errors = validate(req.body, signInSchema)
 
@@ -35,6 +36,7 @@ const signin = (req, res) => {
   }
 
   if (validatePassword(user, password)) {
+    sendRefreshTokenCookie(res, createRefreshToken(user))
     res.json({ accessToken: createAccessToken(user) })
   } else {
     res.status(422).json({})
@@ -66,7 +68,6 @@ const showResetPassword = (req, res) => res.json({ id: req.params.id })
 const updateResetPassword = (req, res) => res.json(req.body)
 
 module.exports = {
-  refresh,
   logout,
   signin,
   signup,

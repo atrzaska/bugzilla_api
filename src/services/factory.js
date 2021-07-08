@@ -13,6 +13,7 @@ const createUser = (i) => ({
   newsletterSubscribed: false,
   photoUrl: `https://randomuser.me/api/portraits/med/men/${i}.jpg`,
   confirmed: true,
+  tokenVersion: 0,
 })
 
 const createProject = (i) => ({
