@@ -13,6 +13,7 @@ const tasksController = require('src/controllers/tasks')
 const profilesController = require('src/controllers/profiles')
 const projectsController = require('src/controllers/projects')
 const storiesController = require('src/controllers/stories')
+const refreshTokenController = require('src/controllers/refreshToken')
 
 const router = express.Router()
 
@@ -23,7 +24,7 @@ router.post('/confirm', authController.confirm)
 router.get('/reset_password/:id', authController.showResetPassword)
 router.put('/reset_password/:id', authController.updateResetPassword)
 
-router.get('/refresh_token', requiresAuth, authController.refresh)
+router.post('/refresh_token', refreshTokenController.create)
 router.post('/logout', requiresAuth, authController.logout)
 
 router.get('/me', requiresAuth, profilesController.show)
