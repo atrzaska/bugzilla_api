@@ -1,5 +1,8 @@
 const User = require('src/models/User')
-const { createAccessToken, refreshAccessToken } = require('src/services/jwt')
+const {
+  createAccessToken,
+  refreshAccessToken,
+} = require('src/services/jwt/accessToken')
 const { validatePassword } = require('src/services/auth')
 const createUser = require('src/services/user/create')
 const {

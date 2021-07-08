@@ -1,4 +1,4 @@
-const { verifyAccessToken } = require('src/services/jwt')
+const { verifyAccessToken } = require('src/services/jwt/accessToken')
 const User = require('src/models/User')
 
 const requiresAuth = (req, res, next) => {
