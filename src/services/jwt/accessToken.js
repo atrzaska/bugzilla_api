@@ -1,3 +1,4 @@
+const User = require('src/models/User')
 const { sign, verify } = require('jsonwebtoken')
 
 const { ACCESS_TOKEN_SECRET } = process.env
