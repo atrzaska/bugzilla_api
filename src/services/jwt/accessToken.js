@@ -7,9 +7,8 @@ const createAccessToken = (user) =>
 const verifyAccessToken = (payload) => verify(payload, ACCESS_TOKEN_SECRET)
 const refreshAccessToken = (token) => {
   const payload = verifyAccessToken(token)
-  delete payload.exp
-  delete payload.iat
-  return createAccessToken(payload)
+  const user = User.find(payload.userId)
+  return createAccessToken(user)
 }
 
 module.exports = {
