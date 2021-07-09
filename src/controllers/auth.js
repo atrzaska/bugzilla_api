@@ -12,7 +12,7 @@ const {
   signInSchema,
 } = require('src/services/yup')
 
-const refresh = (req, res) => res.json({ token: refreshAccessToken(req.token) })
+const refresh = (req, res) => res.json({ accessToken: refreshAccessToken(req.accessToken) })
 const logout = (req, res) => res.json({})
 const signin = (req, res) => {
   const errors = validate(req.body, signInSchema)
@@ -35,7 +35,7 @@ const signin = (req, res) => {
   }
 
   if (validatePassword(user, password)) {
-    res.json({ token: createAccessToken(user) })
+    res.json({ accessToken: createAccessToken(user) })
   } else {
     res.status(422).json({})
   }
