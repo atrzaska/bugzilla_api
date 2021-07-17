@@ -14,6 +14,7 @@ const create = async (req, res) => {
   }
 
   let payload = null
+  let user = null
 
   try {
     payload = verifyRefreshToken(refreshToken)
@@ -24,9 +25,10 @@ const create = async (req, res) => {
 
   // token is valid and
   // we can send back an access token
-  const user = await User.find(payload.userId)
 
-  if (!user) {
+  try {
+    user = await User.find(payload.userId)
+  } catch (err) {
     return res.status(403).send({})
   }
 
